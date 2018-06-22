@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chickens and Rabbits Activity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Chau+Philomene+One%7CLato:400,700" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="header__title">Activity</h1>
+        <div class="header__display">
+            <div class="header__instruction">
+                <p>Inside a corral there are only chickens and rabbits; the total sum of animals is 18 and the total sum of legs is 44.
+                    Are you able to calculate exactly how many chickens and how many rabbits are inside the corral?</p>
+                <p class="header__instruction--note">(keep in mind chickens have 2 legs and rabbits 4 legs)</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="counter">
+        <article class="animal-counter">
+            <h3 class="animal-counter__title">Animal Counter</h3>
+            <div id="counter_display" class="animal-counter__display">
+                <script id="counter_template" type="text/template">
+                    <div class="animal-counter__group">
+                        <img class="animal-counter__item"
+                             src="img/rabbit-head.png" width="28" height="47" alt="Total Rabbits">
+                        <div class="animal-counter__item"> = <span class="animal-counter__number">{{ (_.rabbit||0) }}</span></div>
+                    </div>
+                    <div class="animal-counter__group">
+                        <img class="animal-counter__item"
+                             src="img/chicken-head.png" width="28" height="36" alt="Total Chickens">
+                        <div class="animal-counter__item"> = <span class="animal-counter__number">{{ (_.chicken||0) }}</span></div>
+                    </div>
+                </script>
+            </div>
+        </article>
+    </div>
+
+    <div id="stage" class="animal-stage">
+        <script id="list_template" type="text/template">
+            <ul class="animal-stage__group">
+                {{# for(var i=0; i < _.length; i++) { }}
+                <li class="animal-stage__item">
+                    <img class="animal-stage__image" src="img/{{ _[i].type }}.png" title="{{ _[i].type }}" alt="{{ _[i].type }}">
+                </li>
+                {{# } }}
+            </ul>
+            {{# if(_.length == 18 ){ }}
+            <div class="animal-stage__prompt" role="alert">
+                <p class="animal-stage__prompt-notice">
+                    <span class="animal-stage__prompt-icon">!</span> The corral is now full
+                </p>
+            </div>
+            {{# } }}
+        </script>
+    </div>
+
+    <div id="controls" class="animal-controls">
+        <script id="controls_template" type="text/template">
+            <div class="animal-controls__display">
+                <h2 data-text="Animal Controls" class="animal-controls__title">Animal Controls</h2>
+                <div class="animal-controls__group">
+                    <img class="animal-controls__item" src="img/rabbit.png" width="44" height="104" alt="Rabbit">
+                    <div class="animal-controls__item">
+                        <button class="animal-controls__button animal-controls__button--top"
+                                id="rabbit_add" {{ (_.total >=18? 'disabled':'') }} type="button">+</button>
+                        <button class="animal-controls__button animal-controls__button--bottom"
+                                id="rabbit_remove" {{ (_.rabbit ? '':'disabled') }} type="button">-</button>
+                    </div>
+                </div>
+                <div class="animal-controls__group">
+                    <img class="animal-controls__item" src="img/chicken.png" width="49" height="82" alt="Chicken">
+                    <div class="animal-controls__item">
+                        <button class="animal-controls__button animal-controls__button--top"
+                                id="chicken_add" {{ (_.total >=18? 'disabled':'') }} type="button">+</button>
+                        <button class="animal-controls__button animal-controls__button--bottom"
+                                id="chicken_remove" {{ (_.chicken ? '':'disabled') }} type="button">-</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-control">
+                <div class="submit-control__group {{ (_.total >=18? 'submit-control__group--action':'') }}">
+                    <button id="submit_button"
+                            class="submit-control__button" {{ (_.total ? '':'disabled') }} type="button">&raquo; Submit answer &laquo;</button>
+                </div>
+            </div>
+        </script>
+    </div>
+
+    <audio><source src="audio/pop1.mp3"><source src="audio/pop1.ogg"></audio>
+
+    <script id="modal_template" type="text/template">
+        <div class="modal__group">
+            <button class="modal__close-button" aria-label="close" type="button">&times;</button>
+
+            {{# if( _.type=="success" ){ }}
+            <div class="modal__content modal__content--success">
+                <div class="modal__content-header modal__content-header--success">
+                    <span class="modal__icon">&check;</span> Success
+                </div>
+            {{# } else if( _.type=="failure" ){ }}
+            <div class="modal__content modal__content--failure">
+                <div class="modal__content-header modal__content-header--failure">
+                    <span class="modal__icon">&excl;</span> Try again
+                </div>
+            {{# } }}
+                <div class="modal__content-body">
+                    {{ _.content }}
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
